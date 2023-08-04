@@ -8,7 +8,67 @@ Public Class Form1
     Dim connectionString As String = ("Data Source=DELL-G15;Initial Catalog=db;Integrated Security=True")
     Dim logFilePath As String = "C:\Users\rafae\OneDrive\Escritorio\program_stats.log"
 
+    Private Sub CreateLoginTable()
+        Dim query As String = "CREATE TABLE login (id INT PRIMARY KEY IDENTITY, username VARCHAR(50), password VARCHAR(50), email VARCHAR(100))"
+        Dim tableName As String = "login"
+
+        If TableExists(tableName) Then
+            DeleteTable(tableName)
+        End If
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                connection.Open()
+                command.ExecuteNonQuery()
+                connection.Close()
+            End Using
+        End Using
+    End Sub
+
+    Private Sub DeleteTable(tableName As String)
+        Using connection As New SqlConnection(connectionString)
+
+            Dim query As String = "DROP TABLE " & tableName
+            Using command As New SqlCommand(query, connection)
+                connection.Open()
+                command.ExecuteNonQuery()
+                connection.Close()
+            End Using
+        End Using
+    End Sub
+
+    Private Sub DeleteTable()
+        Using connection As New SqlConnection(connectionString)
+
+            Dim query As String = "DROP TABLE login"
+            Using command As New SqlCommand(query, connection)
+                connection.Open()
+                command.ExecuteNonQuery()
+                connection.Close()
+            End Using
+        End Using
+    End Sub
+
+    Private Function TableExists(tableName As String) As Boolean
+        Dim query As String = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @TableName"
+
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                command.Parameters.AddWithValue("@TableName", tableName)
+                connection.Open()
+                Dim count As Integer = Convert.ToInt32(command.ExecuteScalar())
+                connection.Close()
+                Return count > 0
+            End Using
+        End Using
+    End Function
+
+    '''
+    ''' Load y Close
+    '''
+
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CreateLoginTable()
         CreateUsers()
     End Sub
 
@@ -16,10 +76,12 @@ Public Class Form1
         DeleteTable()
     End Sub
 
-    Private Sub CreateUsers()
+    '''
+    ''' Creacion de usuarios
+    '''
 
-        Dim query As String = "INSERT INTO login (id, username, password) VALUES (@id, @username, @password)"
-        Using connection As New SqlConnection(connectionString)
+    Private Sub CreateUsers()
+        Using connection As New SqlConnection("Data Source=DELL-G15;Initial Catalog=db;Integrated Security=True")
             connection.Open()
 
             ' Crear usuario "user"
@@ -38,17 +100,6 @@ Public Class Form1
                 commandAdmin.Parameters.AddWithValue("@password", "admin")
                 commandAdmin.Parameters.AddWithValue("@email", "admin@admin.com")
                 commandAdmin.ExecuteNonQuery()
-            End Using
-        End Using
-    End Sub
-
-    Private Sub DeleteTable()
-        Using connection As New SqlConnection(connectionString)
-            connection.Open()
-
-            Dim query As String = "DROP TABLE login"
-            Using command As New SqlCommand(query, connection)
-                command.ExecuteNonQuery()
             End Using
         End Using
     End Sub
@@ -75,8 +126,11 @@ Public Class Form1
         Return result > 0
     End Function
 
-    Private Sub LoginButton_Click(sender As Object, e As EventArgs)
-        Dim query As String = "SELECT COUNT(*) FROM Usuarios WHERE NombreUsuario = @Usuario AND Contraseña = @Contraseña"
+    '''
+    ''' Boton ingresar
+    '''
+
+    Private Sub LoginButton_Click_1(sender As Object, e As EventArgs) Handles LoginButton.Click
         Dim username As String = UsernameBox.Text
         Dim password As String = PasswordBox.Text
 
@@ -87,7 +141,7 @@ Public Class Form1
                 'Lend.Show()'
                 Me.Hide()
             Else
-                MessageBox.Show("Inicio de sesión exitoso")
+                MessageBox.Show("Inicio de sesión administrador exitoso")
                 Dim IMS As New IMS()
                 IMS.Show()
                 Me.Hide()
@@ -97,14 +151,9 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub ExitButton_Click(sender As Object, e As EventArgs)
-        Application.Exit()
-    End Sub
-
-    Private Sub AcercaDeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
-        AboutBox1.Show()
-        Me.Hide()
-    End Sub
+    '''
+    ''' Boton de contraseña
+    '''
 
     Private Sub ForgetPasswordButton_Click(sender As Object, e As EventArgs) Handles ForgetPasswordButton.Click
         Dim username As String = UsernameBox.Text.Trim()
@@ -137,4 +186,21 @@ Public Class Form1
         ' Puedes utilizar la clase SmtpClient de System.Net.Mail para enviar el correo electrónico
         ' Asegúrate de configurar correctamente el servidor SMTP y las credenciales de autenticación en tu aplicación
     End Sub
+
+    '''
+    ''' Boton salida
+    '''
+
+    Private Sub ExitButton_Click_1(sender As Object, e As EventArgs) Handles ExitButton.Click
+        Application.Exit()
+    End Sub
+
+    '''
+    ''' Menu tooltrip
+    '''
+    Private Sub AcercaDeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
+        AboutBox1.Show()
+        Me.Hide()
+    End Sub
+
 End Class
