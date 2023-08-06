@@ -1,6 +1,8 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Runtime.InteropServices.JavaScript.JSType
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
+Imports DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing
 
 Public Class Clients
     Dim Con As New SqlConnection("Data Source=DELL-G15;Initial Catalog=db;Integrated Security=True")
@@ -57,29 +59,25 @@ Public Class Clients
     End Function
 
     Private Sub NombreTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles NombreTextBox.KeyPress
-        If Char.IsControl(e.KeyChar) Then
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        ElseIf Char.IsControl(e.KeyChar) Then
             ' Allow control characters (e.g., backspace, delete)
             Exit Sub
-        End If
-        ' Allow all other characters
-        e.Handled = False
-        ' Verificar si la longitud del texto excede los 30 caracteres
-        If NombreTextBox.Text.Length >= 30 Then
-            ' Cancelar la pulsación de tecla
+        ElseIf NombreTextBox.Text.Length >= 20 Then
+            ' Cancel the key press if the length exceeds 20 characters
             e.Handled = True
         End If
     End Sub
 
     Private Sub ApellidoTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ApellidoTextBox.KeyPress
-        If Char.IsControl(e.KeyChar) Then
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        ElseIf Char.IsControl(e.KeyChar) Then
             ' Allow control characters (e.g., backspace, delete)
             Exit Sub
-        End If
-        ' Allow all other characters
-        e.Handled = False
-        ' Verificar si la longitud del texto excede los 30 caracteres
-        If ApellidoTextBox.Text.Length >= 30 Then
-            ' Cancelar la pulsación de tecla
+        ElseIf ApellidoTextBox.Text.Length >= 20 Then
+            ' Cancel the key press if the length exceeds 20 characters
             e.Handled = True
         End If
     End Sub
@@ -113,8 +111,8 @@ Public Class Clients
         End If
         ' Allow all other characters
         e.Handled = False
-        ' Verificar si la longitud del texto excede los 30 caracteres
-        If CorreoTextBox.Text.Length >= 30 Then
+        ' Verificar si la longitud del texto excede los 20 caracteres
+        If CorreoTextBox.Text.Length >= 20 Then
             ' Cancelar la pulsación de tecla
             e.Handled = True
         End If
@@ -125,7 +123,18 @@ Public Class Clients
         Dim nombre As String = NombreTextBox.Text.ToUpper()
         Dim apellido As String = ApellidoTextBox.Text.ToUpper()
         Dim cedulaText As String = CedulaTextBox.Text()
+        Dim telefono As String = TelefonoTextBox.Text()
+        Dim correo As String = CorreoTextBox.Text
 
+        ' Verificar si todas las casillas están vacías
+        If String.IsNullOrWhiteSpace(nombre) AndAlso
+       String.IsNullOrWhiteSpace(apellido) AndAlso
+       String.IsNullOrWhiteSpace(cedulaText) AndAlso
+       String.IsNullOrWhiteSpace(telefono) AndAlso
+       String.IsNullOrWhiteSpace(correo) Then
+            MessageBox.Show("Las casillas no pueden estar vacías.")
+            Return
+        End If
 
 
         If String.IsNullOrEmpty(cedulaText) Then
@@ -140,9 +149,6 @@ Public Class Clients
             Return
         End If
 
-        Dim telefono As String = TelefonoTextBox.Text()
-        Dim correo As String = CorreoTextBox.Text
-
         ' Validar el nombre
         If Not Regex.IsMatch(nombre, pattern) Then
             MessageBox.Show("El nombre debe ser solo texto.")
@@ -151,7 +157,7 @@ Public Class Clients
 
         ' Validar el apellido
         If Not Regex.IsMatch(apellido, pattern) Then
-            MessageBox.Show("La marca debe ser solo texto.")
+            MessageBox.Show("El apellido debe ser solo texto.")
             Return
         End If
 
@@ -221,12 +227,19 @@ Public Class Clients
 
         Dim nombre As String = NombreTextBox.Text
         Dim apellido As String = ApellidoTextBox.Text
-        Dim cedula As String = CedulaTextBox.Text
+        Dim cedulaText As String = CedulaTextBox.Text
         Dim telefono As String = TelefonoTextBox.Text
         Dim correo As String = CorreoTextBox.Text
 
-        If String.IsNullOrEmpty(nombre) OrElse String.IsNullOrEmpty(apellido) OrElse String.IsNullOrEmpty(cedula) OrElse String.IsNullOrEmpty(telefono) OrElse String.IsNullOrEmpty(correo) Then
+        If String.IsNullOrEmpty(nombre) OrElse String.IsNullOrEmpty(apellido) OrElse String.IsNullOrEmpty(cedulaText) OrElse String.IsNullOrEmpty(telefono) OrElse String.IsNullOrEmpty(correo) Then
             MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim cedula As Integer
+
+        If Not Integer.TryParse(cedulaText, cedula) Then
+            MessageBox.Show("El valor de cédula no es válido. Por favor, ingrese un número entero válido.")
             Return
         End If
 
@@ -236,7 +249,7 @@ Public Class Clients
             Using cmd As New SqlCommand(query, Con)
                 cmd.Parameters.AddWithValue("@Nombre", nombre)
                 cmd.Parameters.AddWithValue("@Apellido", apellido)
-                cmd.Parameters.AddWithValue("@Cedula", cedula)
+                cmd.Parameters.AddWithValue("@Cedula", cedulaText)
                 cmd.Parameters.AddWithValue("@Telefono", telefono)
                 cmd.Parameters.AddWithValue("@Correo", correo)
 
@@ -268,12 +281,25 @@ Public Class Clients
     '''
 
     Private Sub DelClientsButton_Click(sender As Object, e As EventArgs) Handles DelClientsButton.Click
-        Dim cedula As Integer = CedulaTextBox.Text()
+
+        Dim cedulaText As String = CedulaTextBox.Text()
+
+        If String.IsNullOrEmpty(cedulaText) Then
+            MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim cedula As Integer
+
+        If Not Integer.TryParse(cedulaText, cedula) Then
+            MessageBox.Show("El valor de cédula no es válido. Por favor, ingrese un número entero válido.")
+            Return
+        End If
 
         Dim query As String = "DELETE FROM clients WHERE Cedula = @Cedula"
 
         Using cmd As New SqlCommand(query, Con)
-            cmd.Parameters.AddWithValue("@Cedula", cedula)
+            cmd.Parameters.AddWithValue("@Cedula", cedulaText)
 
             Con.Open()
             cmd.ExecuteNonQuery()

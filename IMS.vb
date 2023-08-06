@@ -57,6 +57,84 @@ Public Class IMS
         End Using
     End Sub
 
+    Private Sub MarcaTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MarcaTextBox.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        ElseIf Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf MarcaTextBox.Text.Length >= 20 Then
+            ' Cancel the key press if the length exceeds 20 characters
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub ModeloTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ModeloTextBox.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        ElseIf Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf ModeloTextBox.Text.Length >= 20 Then
+            ' Cancel the key press if the length exceeds 20 characters
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub SerialTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ModeloTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf SerialTextBox.Text.Length >= 10 Then
+            ' Cancel the key press if the length exceeds 10 characters
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub AñoTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles AñoTextBox.KeyPress
+        ' Verificar si la longitud del texto excede los 4 caracteres
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If AñoTextBox.Text.Length >= 4 AndAlso Not Char.IsControl(e.KeyChar) Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub CantidadTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CantidadTextBox.KeyPress
+        ' Verificar si la longitud del texto excede los 4 caracteres
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If CantidadTextBox.Text.Length >= 4 AndAlso Not Char.IsControl(e.KeyChar) Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub ColorTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ColorTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf ColorTextBox.Text.Length >= 10 Then
+            ' Cancel the key press if the length exceeds 10 characters
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub DescripcionTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DescripcionTextBox.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        ElseIf Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf DescripcionTextBox.Text.Length >= 45 Then
+            ' Cancel the key press if the length exceeds 45 characters
+            e.Handled = True
+        End If
+    End Sub
+
     '''
     ''' Boton Add
     '''
@@ -106,6 +184,12 @@ Public Class IMS
         End If
 
         año = Integer.Parse(AñoTextBox.Text)
+
+        ' Verificar si el número ingresado está fuera del rango permitido
+        If año < 1800 OrElse año > 2050 Then
+            MessageBox.Show("El año debe estar entre 1800 y 2050")
+            Return
+        End If
 
         ' Validar la cantidad
         If Not IsNumeric(CantidadTextBox.Text) Then
@@ -181,6 +265,18 @@ Public Class IMS
         Dim cantidad As Integer
         Dim color As String = ColorTextBox.Text.ToUpper()
         Dim descripcion As String = DescripcionTextBox.Text.ToUpper()
+
+        ' Verificar si todas las casillas están vacías
+        If String.IsNullOrWhiteSpace(marca) AndAlso
+       String.IsNullOrWhiteSpace(modelo) AndAlso
+       String.IsNullOrWhiteSpace(serial) AndAlso
+       String.IsNullOrWhiteSpace(AñoTextBox.Text) AndAlso
+       String.IsNullOrWhiteSpace(CantidadTextBox.Text) AndAlso
+       String.IsNullOrWhiteSpace(color) AndAlso
+       String.IsNullOrWhiteSpace(descripcion) Then
+            MessageBox.Show("Las casillas no pueden estar vacías.")
+            Return
+        End If
 
         ' Validar los campos actualizados (condiciones individuales para cada casilla)
         If Not String.IsNullOrWhiteSpace(marca) AndAlso Not Regex.IsMatch(marca, "^[a-zA-Z]+$") Then
