@@ -137,8 +137,8 @@ Public Class Form1
         If ValidateUser(username, password) Then
             If username = "user" AndAlso password = "user" Then
                 MessageBox.Show("Inicio de sesión de usuario exitoso")
-                'Dim Lend As New Lend()'
-                'Lend.Show()'
+                Dim Alquiler As New Alquiler()
+                Alquiler.Show()
                 Me.Hide()
             Else
                 MessageBox.Show("Inicio de sesión administrador exitoso")

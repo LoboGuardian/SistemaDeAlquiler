@@ -34,8 +34,8 @@ Partial Class Report
         ReporteButton = New Button()
         DataGridViewClients = New DataGridView()
         DataGridView = New DataGridView()
-        RecuentoLabel = New Label()
         PictureBox1 = New PictureBox()
+        RecuentoLabel = New TextBox()
         MenuStrip1.SuspendLayout()
         CType(DataGridViewClients, ComponentModel.ISupportInitialize).BeginInit()
         CType(DataGridView, ComponentModel.ISupportInitialize).BeginInit()
@@ -96,7 +96,7 @@ Partial Class Report
         ExitButton.Location = New Point(694, 40)
         ExitButton.Name = "ExitButton"
         ExitButton.Size = New Size(94, 29)
-        ExitButton.TabIndex = 32
+        ExitButton.TabIndex = 2
         ExitButton.Text = "Salida"
         ExitButton.UseVisualStyleBackColor = False
         ' 
@@ -108,7 +108,7 @@ Partial Class Report
         ReporteButton.Location = New Point(12, 40)
         ReporteButton.Name = "ReporteButton"
         ReporteButton.Size = New Size(94, 69)
-        ReporteButton.TabIndex = 33
+        ReporteButton.TabIndex = 1
         ReporteButton.Text = "Generar reporte"
         ReporteButton.UseVisualStyleBackColor = False
         ' 
@@ -121,6 +121,7 @@ Partial Class Report
         DataGridViewClients.RowTemplate.Height = 29
         DataGridViewClients.Size = New Size(764, 145)
         DataGridViewClients.TabIndex = 34
+        DataGridViewClients.TabStop = False
         ' 
         ' DataGridView
         ' 
@@ -131,17 +132,7 @@ Partial Class Report
         DataGridView.RowTemplate.Height = 29
         DataGridView.Size = New Size(764, 172)
         DataGridView.TabIndex = 35
-        ' 
-        ' RecuentoLabel
-        ' 
-        RecuentoLabel.AutoSize = True
-        RecuentoLabel.BackColor = Color.Khaki
-        RecuentoLabel.Font = New Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point)
-        RecuentoLabel.Location = New Point(131, 44)
-        RecuentoLabel.Name = "RecuentoLabel"
-        RecuentoLabel.Size = New Size(77, 25)
-        RecuentoLabel.TabIndex = 36
-        RecuentoLabel.Text = "Reporte"
+        DataGridView.TabStop = False
         ' 
         ' PictureBox1
         ' 
@@ -151,6 +142,13 @@ Partial Class Report
         PictureBox1.Size = New Size(801, 450)
         PictureBox1.TabIndex = 37
         PictureBox1.TabStop = False
+        ' 
+        ' RecuentoLabel
+        ' 
+        RecuentoLabel.Location = New Point(158, 42)
+        RecuentoLabel.Name = "RecuentoLabel"
+        RecuentoLabel.Size = New Size(125, 27)
+        RecuentoLabel.TabIndex = 38
         ' 
         ' Report
         ' 
@@ -165,7 +163,7 @@ Partial Class Report
         Controls.Add(MenuStrip1)
         Controls.Add(PictureBox1)
         Name = "Report"
-        Text = "Report"
+        Text = "Ventana de Reporte"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(DataGridViewClients, ComponentModel.ISupportInitialize).EndInit()
@@ -185,6 +183,6 @@ Partial Class Report
     Friend WithEvents ReporteButton As Button
     Friend WithEvents DataGridViewClients As DataGridView
     Friend WithEvents DataGridView As DataGridView
-    Friend WithEvents RecuentoLabel As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents RecuentoLabel As TextBox
 End Class

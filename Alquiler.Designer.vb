@@ -99,6 +99,7 @@ Partial Class Alquiler
         DataGridView.RowTemplate.Height = 29
         DataGridView.Size = New Size(762, 255)
         DataGridView.TabIndex = 35
+        DataGridView.TabStop = False
         ' 
         ' RentButton
         ' 
@@ -108,7 +109,7 @@ Partial Class Alquiler
         RentButton.Location = New Point(41, 145)
         RentButton.Name = "RentButton"
         RentButton.Size = New Size(100, 29)
-        RentButton.TabIndex = 34
+        RentButton.TabIndex = 3
         RentButton.Text = "Alquilar"
         RentButton.UseVisualStyleBackColor = False
         ' 
@@ -128,7 +129,7 @@ Partial Class Alquiler
         SerialTextBox.Location = New Point(115, 44)
         SerialTextBox.Name = "SerialTextBox"
         SerialTextBox.Size = New Size(159, 27)
-        SerialTextBox.TabIndex = 30
+        SerialTextBox.TabIndex = 1
         ' 
         ' UnRentButton
         ' 
@@ -138,7 +139,7 @@ Partial Class Alquiler
         UnRentButton.Location = New Point(155, 145)
         UnRentButton.Name = "UnRentButton"
         UnRentButton.Size = New Size(100, 29)
-        UnRentButton.TabIndex = 36
+        UnRentButton.TabIndex = 4
         UnRentButton.Text = "Devuelto"
         UnRentButton.UseVisualStyleBackColor = False
         ' 
@@ -151,6 +152,7 @@ Partial Class Alquiler
         DataGridView1.RowTemplate.Height = 29
         DataGridView1.Size = New Size(469, 119)
         DataGridView1.TabIndex = 37
+        DataGridView1.TabStop = False
         ' 
         ' Label1
         ' 
@@ -168,7 +170,7 @@ Partial Class Alquiler
         CedulaTextBox.Location = New Point(115, 90)
         CedulaTextBox.Name = "CedulaTextBox"
         CedulaTextBox.Size = New Size(159, 27)
-        CedulaTextBox.TabIndex = 38
+        CedulaTextBox.TabIndex = 2
         ' 
         ' PictureBox1
         ' 
@@ -196,7 +198,7 @@ Partial Class Alquiler
         Controls.Add(PictureBox1)
         MainMenuStrip = MenuStrip1
         Name = "Alquiler"
-        Text = "Alquiler"
+        Text = "Ventana de Alquiler"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(DataGridView, ComponentModel.ISupportInitialize).EndInit()

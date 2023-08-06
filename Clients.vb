@@ -56,12 +56,90 @@ Public Class Clients
 
     End Function
 
+    Private Sub NombreTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles NombreTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        End If
+        ' Allow all other characters
+        e.Handled = False
+        ' Verificar si la longitud del texto excede los 30 caracteres
+        If NombreTextBox.Text.Length >= 30 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub ApellidoTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ApellidoTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        End If
+        ' Allow all other characters
+        e.Handled = False
+        ' Verificar si la longitud del texto excede los 30 caracteres
+        If ApellidoTextBox.Text.Length >= 30 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub CedulaTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CedulaTextBox.KeyPress
+        ' Verificar si la longitud del texto excede los 09 caracteres
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If CedulaTextBox.Text.Length >= 9 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub TelefonoTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TelefonoTextBox.KeyPress
+        ' Verificar si la longitud del texto excede los 12 caracteres
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If TelefonoTextBox.Text.Length >= 12 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub CorreoTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CorreoTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        End If
+        ' Allow all other characters
+        e.Handled = False
+        ' Verificar si la longitud del texto excede los 30 caracteres
+        If CorreoTextBox.Text.Length >= 30 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
 
     Private Sub AddClientsButton_Click(sender As Object, e As EventArgs) Handles AddClientsButton.Click
         Dim pattern As String = "^[a-zA-Z]+$"
         Dim nombre As String = NombreTextBox.Text.ToUpper()
         Dim apellido As String = ApellidoTextBox.Text.ToUpper()
-        Dim cedula As Integer = CedulaTextBox.Text()
+        Dim cedulaText As String = CedulaTextBox.Text()
+
+
+
+        If String.IsNullOrEmpty(cedulaText) Then
+            MessageBox.Show("El campo de cédula está vacío. Por favor, ingrese un valor.")
+            Return
+        End If
+
+        Dim cedula As Integer
+
+        If Not Integer.TryParse(cedulaText, cedula) Then
+            MessageBox.Show("El valor de cédula no es válido. Por favor, ingrese un número entero válido.")
+            Return
+        End If
+
         Dim telefono As String = TelefonoTextBox.Text()
         Dim correo As String = CorreoTextBox.Text
 
@@ -75,10 +153,6 @@ Public Class Clients
         If Not Regex.IsMatch(apellido, pattern) Then
             MessageBox.Show("La marca debe ser solo texto.")
             Return
-        End If
-
-        If Not ValidarCedula(cedula) Then
-            MessageBox.Show("La cédula no es válida.")
         End If
 
         ' Verificar si la cédula ya existe en la base de datos

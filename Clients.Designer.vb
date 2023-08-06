@@ -67,7 +67,7 @@ Partial Class Clients
         NombreTextBox.Location = New Point(138, 36)
         NombreTextBox.Name = "NombreTextBox"
         NombreTextBox.Size = New Size(202, 27)
-        NombreTextBox.TabIndex = 26
+        NombreTextBox.TabIndex = 1
         ' 
         ' DataGridViewClients
         ' 
@@ -78,6 +78,7 @@ Partial Class Clients
         DataGridViewClients.RowTemplate.Height = 29
         DataGridViewClients.Size = New Size(751, 248)
         DataGridViewClients.TabIndex = 32
+        DataGridViewClients.TabStop = False
         ' 
         ' ExitClientsButton
         ' 
@@ -87,7 +88,7 @@ Partial Class Clients
         ExitClientsButton.Location = New Point(683, 155)
         ExitClientsButton.Name = "ExitClientsButton"
         ExitClientsButton.Size = New Size(94, 29)
-        ExitClientsButton.TabIndex = 31
+        ExitClientsButton.TabIndex = 10
         ExitClientsButton.Text = "Salida"
         ExitClientsButton.UseVisualStyleBackColor = False
         ' 
@@ -99,7 +100,7 @@ Partial Class Clients
         AddClientsButton.Location = New Point(26, 155)
         AddClientsButton.Name = "AddClientsButton"
         AddClientsButton.Size = New Size(94, 29)
-        AddClientsButton.TabIndex = 46
+        AddClientsButton.TabIndex = 6
         AddClientsButton.Text = "Añadir"
         AddClientsButton.UseVisualStyleBackColor = False
         ' 
@@ -111,7 +112,7 @@ Partial Class Clients
         EditClientsButton.Location = New Point(126, 155)
         EditClientsButton.Name = "EditClientsButton"
         EditClientsButton.Size = New Size(94, 29)
-        EditClientsButton.TabIndex = 47
+        EditClientsButton.TabIndex = 7
         EditClientsButton.Text = "Editar"
         EditClientsButton.UseVisualStyleBackColor = False
         ' 
@@ -123,7 +124,7 @@ Partial Class Clients
         DelClientsButton.Location = New Point(228, 155)
         DelClientsButton.Name = "DelClientsButton"
         DelClientsButton.Size = New Size(94, 29)
-        DelClientsButton.TabIndex = 48
+        DelClientsButton.TabIndex = 8
         DelClientsButton.Text = "Eliminar"
         DelClientsButton.UseVisualStyleBackColor = False
         ' 
@@ -135,7 +136,7 @@ Partial Class Clients
         ClsClientsButton.Location = New Point(328, 155)
         ClsClientsButton.Name = "ClsClientsButton"
         ClsClientsButton.Size = New Size(94, 29)
-        ClsClientsButton.TabIndex = 49
+        ClsClientsButton.TabIndex = 9
         ClsClientsButton.Text = "Limpiar"
         ClsClientsButton.UseVisualStyleBackColor = False
         ' 
@@ -155,7 +156,7 @@ Partial Class Clients
         ApellidoTextBox.Location = New Point(138, 69)
         ApellidoTextBox.Name = "ApellidoTextBox"
         ApellidoTextBox.Size = New Size(202, 27)
-        ApellidoTextBox.TabIndex = 50
+        ApellidoTextBox.TabIndex = 2
         ' 
         ' Label3
         ' 
@@ -173,7 +174,7 @@ Partial Class Clients
         TelefonoTextBox.Location = New Point(431, 40)
         TelefonoTextBox.Name = "TelefonoTextBox"
         TelefonoTextBox.Size = New Size(202, 27)
-        TelefonoTextBox.TabIndex = 52
+        TelefonoTextBox.TabIndex = 4
         ' 
         ' Label4
         ' 
@@ -191,7 +192,7 @@ Partial Class Clients
         CedulaTextBox.Location = New Point(138, 104)
         CedulaTextBox.Name = "CedulaTextBox"
         CedulaTextBox.Size = New Size(202, 27)
-        CedulaTextBox.TabIndex = 54
+        CedulaTextBox.TabIndex = 3
         ' 
         ' Label5
         ' 
@@ -209,7 +210,7 @@ Partial Class Clients
         CorreoTextBox.Location = New Point(431, 75)
         CorreoTextBox.Name = "CorreoTextBox"
         CorreoTextBox.Size = New Size(202, 27)
-        CorreoTextBox.TabIndex = 56
+        CorreoTextBox.TabIndex = 5
         ' 
         ' MenuStrip1
         ' 
@@ -291,7 +292,7 @@ Partial Class Clients
         Controls.Add(PictureBox1)
         MainMenuStrip = MenuStrip1
         Name = "Clients"
-        Text = "Clients"
+        Text = "Ventana de Clientes"
         CType(DataGridViewClients, ComponentModel.ISupportInitialize).EndInit()
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()

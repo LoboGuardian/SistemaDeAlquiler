@@ -42,7 +42,7 @@ Partial Class Export
         MenuStrip1.Items.AddRange(New ToolStripItem() {InventarioToolStripMenuItem, ClientesToolStripMenuItem, AlquilerToolStripMenuItem, ReporteToolStripMenuItem, CerrarSesiónToolStripMenuItem, SalirToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(800, 28)
+        MenuStrip1.Size = New Size(346, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -99,7 +99,7 @@ Partial Class Export
         ExitButton.BackColor = Color.Khaki
         ExitButton.FlatStyle = FlatStyle.Popup
         ExitButton.Font = New Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point)
-        ExitButton.Location = New Point(694, 46)
+        ExitButton.Location = New Point(164, 51)
         ExitButton.Name = "ExitButton"
         ExitButton.Size = New Size(94, 29)
         ExitButton.TabIndex = 36
@@ -109,9 +109,9 @@ Partial Class Export
         ' PictureBox1
         ' 
         PictureBox1.Image = My.Resources.Resources.cloud_backup_for_business
-        PictureBox1.Location = New Point(0, 26)
+        PictureBox1.Location = New Point(0, 31)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(800, 421)
+        PictureBox1.Size = New Size(346, 146)
         PictureBox1.TabIndex = 40
         PictureBox1.TabStop = False
         ' 
@@ -119,14 +119,14 @@ Partial Class Export
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(346, 181)
         Controls.Add(ExportButton)
         Controls.Add(ExitButton)
         Controls.Add(MenuStrip1)
         Controls.Add(PictureBox1)
         MainMenuStrip = MenuStrip1
         Name = "Export"
-        Text = "Export"
+        Text = "Ventana de Exportación"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()

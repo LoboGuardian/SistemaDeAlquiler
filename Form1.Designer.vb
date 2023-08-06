@@ -45,7 +45,7 @@ Partial Class Form1
         LoginButton.Location = New Point(131, 344)
         LoginButton.Name = "LoginButton"
         LoginButton.Size = New Size(94, 29)
-        LoginButton.TabIndex = 0
+        LoginButton.TabIndex = 3
         LoginButton.Text = "Ingresar"
         LoginButton.UseVisualStyleBackColor = False
         ' 
@@ -54,7 +54,7 @@ Partial Class Form1
         UsernameBox.Location = New Point(131, 132)
         UsernameBox.Name = "UsernameBox"
         UsernameBox.Size = New Size(202, 27)
-        UsernameBox.TabIndex = 1
+        UsernameBox.TabIndex = 0
         ' 
         ' Label1
         ' 
@@ -83,7 +83,7 @@ Partial Class Form1
         PasswordBox.Location = New Point(131, 226)
         PasswordBox.Name = "PasswordBox"
         PasswordBox.Size = New Size(202, 27)
-        PasswordBox.TabIndex = 4
+        PasswordBox.TabIndex = 1
         ' 
         ' Label3
         ' 
@@ -103,7 +103,7 @@ Partial Class Form1
         ForgetPasswordButton.Location = New Point(131, 379)
         ForgetPasswordButton.Name = "ForgetPasswordButton"
         ForgetPasswordButton.Size = New Size(194, 29)
-        ForgetPasswordButton.TabIndex = 6
+        ForgetPasswordButton.TabIndex = 4
         ForgetPasswordButton.Text = "Recuperar contraseña"
         ForgetPasswordButton.UseVisualStyleBackColor = False
         ' 
@@ -114,7 +114,7 @@ Partial Class Form1
         ExitButton.Location = New Point(231, 344)
         ExitButton.Name = "ExitButton"
         ExitButton.Size = New Size(94, 29)
-        ExitButton.TabIndex = 7
+        ExitButton.TabIndex = 5
         ExitButton.Text = "Salida"
         ExitButton.UseVisualStyleBackColor = False
         ' 
@@ -164,7 +164,7 @@ Partial Class Form1
         Controls.Add(PictureBox1)
         MainMenuStrip = MenuStrip1
         Name = "Form1"
-        Text = "Form1"
+        Text = "Ventana de Autenticación"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()

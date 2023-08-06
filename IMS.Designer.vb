@@ -134,7 +134,7 @@ Partial Class IMS
         ModeloTextBox.Location = New Point(99, 105)
         ModeloTextBox.Name = "ModeloTextBox"
         ModeloTextBox.Size = New Size(202, 27)
-        ModeloTextBox.TabIndex = 12
+        ModeloTextBox.TabIndex = 2
         ' 
         ' Label2
         ' 
@@ -163,14 +163,14 @@ Partial Class IMS
         MarcaTextBox.Location = New Point(99, 76)
         MarcaTextBox.Name = "MarcaTextBox"
         MarcaTextBox.Size = New Size(202, 27)
-        MarcaTextBox.TabIndex = 9
+        MarcaTextBox.TabIndex = 1
         ' 
         ' SerialTextBox
         ' 
         SerialTextBox.Location = New Point(99, 135)
         SerialTextBox.Name = "SerialTextBox"
         SerialTextBox.Size = New Size(202, 27)
-        SerialTextBox.TabIndex = 15
+        SerialTextBox.TabIndex = 3
         ' 
         ' Label1
         ' 
@@ -222,7 +222,7 @@ Partial Class IMS
         DescripcionTextBox.Multiline = True
         DescripcionTextBox.Name = "DescripcionTextBox"
         DescripcionTextBox.Size = New Size(174, 60)
-        DescripcionTextBox.TabIndex = 23
+        DescripcionTextBox.TabIndex = 7
         ' 
         ' AddButton
         ' 
@@ -232,7 +232,7 @@ Partial Class IMS
         AddButton.Location = New Point(25, 177)
         AddButton.Name = "AddButton"
         AddButton.Size = New Size(94, 29)
-        AddButton.TabIndex = 25
+        AddButton.TabIndex = 8
         AddButton.Text = "Añadir"
         AddButton.UseVisualStyleBackColor = False
         ' 
@@ -244,7 +244,7 @@ Partial Class IMS
         EditButton.Location = New Point(125, 177)
         EditButton.Name = "EditButton"
         EditButton.Size = New Size(94, 29)
-        EditButton.TabIndex = 26
+        EditButton.TabIndex = 9
         EditButton.Text = "Editar"
         EditButton.UseVisualStyleBackColor = False
         ' 
@@ -256,7 +256,7 @@ Partial Class IMS
         DelButton.Location = New Point(225, 177)
         DelButton.Name = "DelButton"
         DelButton.Size = New Size(94, 29)
-        DelButton.TabIndex = 27
+        DelButton.TabIndex = 10
         DelButton.Text = "Borrar"
         DelButton.UseVisualStyleBackColor = False
         ' 
@@ -268,7 +268,7 @@ Partial Class IMS
         ClsButton.Location = New Point(325, 177)
         ClsButton.Name = "ClsButton"
         ClsButton.Size = New Size(94, 29)
-        ClsButton.TabIndex = 28
+        ClsButton.TabIndex = 11
         ClsButton.Text = "Limpiar"
         ClsButton.UseVisualStyleBackColor = False
         ' 
@@ -281,6 +281,7 @@ Partial Class IMS
         DataGridView.RowTemplate.Height = 29
         DataGridView.Size = New Size(834, 223)
         DataGridView.TabIndex = 29
+        DataGridView.TabStop = False
         ' 
         ' ExitButton
         ' 
@@ -298,21 +299,21 @@ Partial Class IMS
         AñoTextBox.Location = New Point(429, 76)
         AñoTextBox.Name = "AñoTextBox"
         AñoTextBox.Size = New Size(201, 27)
-        AñoTextBox.TabIndex = 17
+        AñoTextBox.TabIndex = 4
         ' 
         ' CantidadTextBox
         ' 
         CantidadTextBox.Location = New Point(428, 106)
         CantidadTextBox.Name = "CantidadTextBox"
         CantidadTextBox.Size = New Size(202, 27)
-        CantidadTextBox.TabIndex = 19
+        CantidadTextBox.TabIndex = 5
         ' 
         ' ColorTextBox
         ' 
         ColorTextBox.Location = New Point(429, 136)
         ColorTextBox.Name = "ColorTextBox"
         ColorTextBox.Size = New Size(201, 27)
-        ColorTextBox.TabIndex = 21
+        ColorTextBox.TabIndex = 6
         ' 
         ' Label7
         ' 
