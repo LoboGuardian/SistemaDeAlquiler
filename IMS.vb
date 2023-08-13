@@ -81,7 +81,7 @@ Public Class IMS
         End If
     End Sub
 
-    Private Sub SerialTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ModeloTextBox.KeyPress
+    Private Sub SerialTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SerialTextBox.KeyPress
         If Char.IsControl(e.KeyChar) Then
             ' Allow control characters (e.g., backspace, delete)
             Exit Sub
@@ -266,6 +266,12 @@ Public Class IMS
         Dim color As String = ColorTextBox.Text.ToUpper()
         Dim descripcion As String = DescripcionTextBox.Text.ToUpper()
 
+
+        If String.IsNullOrEmpty(marca) OrElse String.IsNullOrEmpty(modelo) OrElse String.IsNullOrEmpty(serial) OrElse String.IsNullOrEmpty(color) OrElse String.IsNullOrEmpty(descripcion) Then
+            MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         ' Verificar si todas las casillas están vacías
         If String.IsNullOrWhiteSpace(marca) AndAlso
        String.IsNullOrWhiteSpace(modelo) AndAlso
@@ -286,11 +292,6 @@ Public Class IMS
 
         If Not String.IsNullOrWhiteSpace(modelo) AndAlso Not Regex.IsMatch(modelo, "^[a-zA-Z]+$") Then
             MessageBox.Show("El modelo debe ser solo texto.")
-            Return
-        End If
-
-        If Not String.IsNullOrWhiteSpace(serial) AndAlso Not Regex.IsMatch(serial, "^[a-zA-Z]+$") Then
-            MessageBox.Show("El serial debe ser solo texto.")
             Return
         End If
 
@@ -315,7 +316,7 @@ Public Class IMS
             Using command As New SqlCommand(query, connection)
                 command.Parameters.AddWithValue("@Marca", marca)
                 command.Parameters.AddWithValue("@Modelo", modelo)
-                command.Parameters.AddWithValue("@Año", Integer.TryParse(AñoTextBox.Text, año))
+                command.Parameters.AddWithValue("@Año", Integer.Parse(AñoTextBox.Text))
                 command.Parameters.AddWithValue("@Cantidad", Integer.TryParse(CantidadTextBox.Text, cantidad))
                 command.Parameters.AddWithValue("@Color", color)
                 command.Parameters.AddWithValue("@Descripción", descripcion)
@@ -430,6 +431,7 @@ Public Class IMS
 
     Private Sub AcercaDeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
         AboutBox1.Show()
+        Me.Hide()
     End Sub
 
     Private Sub CerrarSesiónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarSesiónToolStripMenuItem.Click

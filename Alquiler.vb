@@ -3,6 +3,7 @@ Imports System.Data.SqlClient
 Imports System.Text.RegularExpressions
 Imports DocumentFormat.OpenXml.Office2010.Excel
 
+
 Public Class Alquiler
     Dim Con As New SqlConnection("Data Source=DELL-G15;Initial Catalog=db;Integrated Security=True")
 
@@ -85,6 +86,26 @@ Public Class Alquiler
         End Using
     End Sub
 
+    Private Sub SerialTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SerialTextBox.KeyPress
+        If Char.IsControl(e.KeyChar) Then
+            ' Allow control characters (e.g., backspace, delete)
+            Exit Sub
+        ElseIf SerialTextBox.Text.Length >= 10 Then
+            ' Cancel the key press if the length exceeds 10 characters
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub CedulaTextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CedulaTextBox.KeyPress
+        ' Verificar si la longitud del texto excede los 09 caracteres
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If CedulaTextBox.Text.Length >= 9 Then
+            ' Cancelar la pulsación de tecla
+            e.Handled = True
+        End If
+    End Sub
 
     '''
     ''' Boton Add
@@ -133,9 +154,9 @@ Public Class Alquiler
                                         reader.Close()
 
                                         ' Actualizar la tabla "inventory" con los datos del cliente
-                                        Dim queryInventory As String = "UPDATE inventory SET Nombre = @Nombre, Apellido = @Apellido, Cedula = @Cedula WHERE Serial = @Serial"
+                                        Dim queryInventory As String = "UPDATE inventory SET Estado = 'ALQUILADO', Nombre = @Nombre, Apellido = @Apellido, Cedula = @Cedula WHERE Serial = @Serial"
                                         Using commandInventory As New SqlCommand(queryInventory, connection)
-                                            commandInventory.Parameters.AddWithValue("@Nombre", nombre)
+                                                                                        commandInventory.Parameters.AddWithValue("@Nombre", nombre)
                                             commandInventory.Parameters.AddWithValue("@Apellido", apellido)
                                             commandInventory.Parameters.AddWithValue("@Cedula", cedula)
                                             commandInventory.Parameters.AddWithValue("@Serial", serial)
@@ -166,21 +187,37 @@ Public Class Alquiler
         Dim serial As String = SerialTextBox.Text
         Dim cedula As String = CedulaTextBox.Text
 
+        If String.IsNullOrWhiteSpace(cedula) AndAlso
+       String.IsNullOrWhiteSpace(serial) Then
+            MessageBox.Show("Las casillas no pueden estar vacías.")
+            Return
+        End If
+
+        Dim foundMatch As Boolean = False ' Variable para verificar si se encontró una coincidencia
+
+
         For Each row As DataGridViewRow In DataGridView.Rows
             Dim serialCellValue As String = row.Cells("Serial").Value.ToString()
             Dim cedulaCellValue As String = row.Cells("Cedula").Value.ToString()
             If Not String.IsNullOrEmpty(serial) AndAlso serialCellValue = serial Then
-                UpdateRow(row)
+                UpdateRowUnrent(row)
+                foundMatch = True ' Se encontró una coincidencia
                 Exit For
             ElseIf Not String.IsNullOrEmpty(cedula) AndAlso cedulaCellValue = cedula Then
-                UpdateRow(row)
+                UpdateRowUnrent(row)
+                foundMatch = True ' Se encontró una coincidencia
                 Exit For
             End If
         Next
+
+        If Not foundMatch Then ' Si no se encontró ninguna coincidencia
+            MessageBox.Show("No se encontraron coincidencias de cédula o serial.")
+        End If
+
         RefreshDataGridView()
     End Sub
 
-    Private Sub UpdateRow(row As DataGridViewRow)
+    Private Sub UpdateRowUnrent(row As DataGridViewRow)
         row.Cells("Estado").Value = "DISPONIBLE"
         row.Cells("Nombre").Value = DBNull.Value
         row.Cells("Apellido").Value = DBNull.Value
@@ -196,7 +233,6 @@ Public Class Alquiler
                 command.ExecuteNonQuery()
             End Using
         End Using
-
     End Sub
 
 
@@ -205,9 +241,7 @@ Public Class Alquiler
     '''
 
     Private Sub InventarioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventarioToolStripMenuItem.Click
-        'IMS.Show()'
-        Dim imsForm As New IMS()
-        imsForm.Show()
+        IMS.Show()
         Me.Close()
     End Sub
 

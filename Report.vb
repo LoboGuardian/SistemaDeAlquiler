@@ -5,102 +5,163 @@ Imports System.IO
 
 Public Class Report
 
+    Private Sub ExportToPDF()
+
+        ' Obtener la fecha y hora actual
+        Dim currentDate As String = DateTime.Now.ToString("yyyyMMdd_HHmmss")
+
+        ' Agregar la fecha y hora al nombre del archivo
+        Dim fileName As String = "Reporte_" & currentDate & ".pdf"
+
+        ' Crear el documento PDF
+        Dim doc As New Document()
+        Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(doc, New FileStream("C:\Users\rafae\OneDrive\Escritorio\" & fileName, FileMode.Create))
+        doc.Open()
+
+        ' Add logo
+        Dim image As Image = Image.GetInstance("logo.png")
+        image.ScaleAbsolute(50.0F, 50.0F)
+        image.SetAbsolutePosition(500.0F, 750.0F)
+        doc.Add(image)
+
+        ' Add header
+        Dim headerTable As New PdfPTable(1)
+        headerTable.DefaultCell.Border = Rectangle.NO_BORDER
+        headerTable.WidthPercentage = 100
+        headerTable.TotalWidth = doc.PageSize.Width - doc.LeftMargin - doc.RightMargin
+
+        Dim cellA As New PdfPCell()
+        cellA.Border = Rectangle.NO_BORDER
+        ' Center align the text
+        cellA.HorizontalAlignment = Element.ALIGN_CENTER
+        cellA.VerticalAlignment = Element.ALIGN_MIDDLE
+
+        ' Add company name
+        cellA.AddElement(New Paragraph("COOPERATIVA SOLUCIONES"))
+        cellA.AddElement(New Paragraph("GENEREALES EMPRESARIALES, R.L."))
+        cellA.AddElement(New Paragraph("RIF: J-29780707-1"))
+        headerTable.AddCell(cellA)
+
+        ' Add header to each page
+        pdfWriter.PageEvent = New HeaderFooter(headerTable)
+
+
+        ' Crear la tabla para inventory
+        If DataGridView.Rows.Count > 0 Then
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph("Tabla 'Inventario':"))
+            doc.Add(New Paragraph(" "))
+
+
+            Dim table As New PdfPTable(DataGridView.Columns.Count - 4) ' Restamos 4 para excluir los campos Nombre, Apellido y Cedula
+            table.WidthPercentage = 100
+
+            For Each column As DataGridViewColumn In DataGridView.Columns
+                If column.HeaderText <> "ID" AndAlso column.HeaderText <> "Nombre" AndAlso column.HeaderText <> "Apellido" AndAlso column.HeaderText <> "Cedula" Then
+                    table.AddCell(column.HeaderText)
+                End If
+            Next
+
+            For Each row As DataGridViewRow In DataGridView.Rows
+                For Each cell As DataGridViewCell In row.Cells
+                    If cell.OwningColumn.HeaderText <> "ID" AndAlso cell.OwningColumn.HeaderText <> "Nombre" AndAlso cell.OwningColumn.HeaderText <> "Apellido" AndAlso cell.OwningColumn.HeaderText <> "Cedula" Then
+                        If cell.Value IsNot Nothing Then
+                            table.AddCell(cell.Value.ToString())
+                        Else
+                            table.AddCell("")
+                        End If
+                    End If
+                Next
+            Next
+
+            doc.Add(table)
+
+            Dim productCount As Integer = CountProducts()
+            doc.Add(New Paragraph("Recuento de productos: " & productCount.ToString()))
+
+            ' Agregar espacio debajo de la tabla
+            doc.Add(New Paragraph(" "))
+        Else
+            ' Agregar mensaje de excepción si no hay datos en la tabla
+            Throw New Exception("La tabla 'Inventario' no contiene datos.")
+        End If
+
+        doc.Add(image)
+
+        ' Crear la tabla para clientes
+        If DataGridViewClients.Rows.Count > 0 Then
+            doc.NewPage()
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph("Tabla 'clientes':"))
+            doc.Add(New Paragraph(" "))
+
+            Dim tableClientes As New PdfPTable(DataGridViewClients.Columns.Count - 1)
+            tableClientes.WidthPercentage = 100
+
+            For Each column As DataGridViewColumn In DataGridViewClients.Columns
+                If column.HeaderText <> "ID" Then
+                    tableClientes.AddCell(column.HeaderText)
+                End If
+            Next
+
+            For Each row As DataGridViewRow In DataGridViewClients.Rows
+                For Each cell As DataGridViewCell In row.Cells
+                    If cell.OwningColumn.HeaderText <> "ID" Then
+                        If cell.Value IsNot Nothing Then
+                            tableClientes.AddCell(cell.Value.ToString())
+                        Else
+                            tableClientes.AddCell("")
+                        End If
+                    End If
+                Next
+            Next
+
+            doc.Add(tableClientes)
+
+            Dim clientesCount As Integer = CountClientes()
+            doc.Add(New Paragraph("Recuento de clientes: " & clientesCount.ToString()))
+
+            ' Agregar espacio debajo de la tabla
+            doc.Add(New Paragraph(" "))
+        Else
+            ' Agregar mensaje de excepción si no hay datos en la tabla
+            Throw New Exception("La tabla 'clientes' no contiene datos.")
+        End If
+
+        doc.Close()
+
+        MessageBox.Show("Los datos se han exportado a un archivo PDF.")
+    End Sub
+
     Private Sub ReporteButton_Click(sender As Object, e As EventArgs) Handles ReporteButton.Click
         ExportToPDF()
     End Sub
 
-    Private Sub ExportToPDF()
+    ' Clase para agregar el encabezado a cada página
+    Public Class HeaderFooter
+        Inherits PdfPageEventHelper
 
-        ' Verificar si el DataGridView de inventory tiene datos
-        If DataGridView.Rows.Count > 0 Then
-            ' Crear el documento PDF para inventory
-            Dim doc As New Document()
-            Dim pdfWriter As PdfWriter = PdfWriter.GetInstance(doc, New FileStream("C:\Users\rafae\OneDrive\Escritorio\inventory.pdf", FileMode.Create))
-            doc.Open()
-            ' Crear la tabla para inventory
-            Dim table As New PdfPTable(DataGridView.Columns.Count)
-            ' Agregar encabezados de columna
-            For Each column As DataGridViewColumn In DataGridView.Columns
-                table.AddCell(column.HeaderText)
-            Next
-            ' Agregar filas y celdas con datos
-            For Each row As DataGridViewRow In DataGridView.Rows
-                For Each cell As DataGridViewCell In row.Cells
-                    If cell.Value IsNot Nothing Then
-                        table.AddCell(cell.Value.ToString())
-                    Else
-                        table.AddCell("") ' Opcionalmente, puedes agregar un valor predeterminado en caso de que la celda sea nula
-                    End If
-                Next
-            Next
+        Private headerTable As PdfPTable
 
-            ' Agregar la tabla de inventory al documento
-            doc.Add(table)
+        Public Sub New(ByVal headerTable As PdfPTable)
+            Me.headerTable = headerTable
+        End Sub
 
-            ' Agregar el recuento de productos al documento
-            Dim productCount As Integer = CountProducts()
-            Dim countTable As New PdfPTable(2)
-            countTable.DefaultCell.Padding = 3
-            countTable.WidthPercentage = 100
-            countTable.HorizontalAlignment = Element.ALIGN_LEFT
-            countTable.AddCell("Recuento de productos:")
-            countTable.AddCell(productCount.ToString())
-            doc.Add(countTable)
+        Public Overrides Sub OnEndPage(ByVal writer As PdfWriter, ByVal document As Document)
+            headerTable.WriteSelectedRows(0, -1, document.LeftMargin, document.PageSize.GetTop(document.TopMargin), writer.DirectContent)
+        End Sub
+    End Class
 
 
-            ' Cerrar el documento de inventory
-            doc.Close()
 
-            MessageBox.Show("La tabla 'inventory' se ha exportado a un archivo PDF.")
-        Else
-            MessageBox.Show("No hay datos en la tabla 'inventory'.")
-        End If
-
-        ' Verificar si el DataGridView de clientes tiene datos
-        If DataGridViewClients.Rows.Count > 0 Then
-            ' Crear el documento PDF para clientes
-            Dim docClientes As New Document()
-            Dim pdfWriterClientes As PdfWriter = PdfWriter.GetInstance(docClientes, New FileStream("C:\Users\rafae\OneDrive\Escritorio\clientes.pdf", FileMode.Create))
-            docClientes.Open()
-
-            ' Crear la tabla para clientes
-            Dim tableClientes As New PdfPTable(DataGridViewClients.Columns.Count)
-            ' Agregar encabezados de columna
-            For Each column As DataGridViewColumn In DataGridViewClients.Columns
-                tableClientes.AddCell(column.HeaderText)
-            Next
-            ' Agregar filas y celdas con datos
-            For Each row As DataGridViewRow In DataGridViewClients.Rows
-                For Each cell As DataGridViewCell In row.Cells
-                    If cell.Value IsNot Nothing Then
-                        tableClientes.AddCell(cell.Value.ToString())
-                    Else
-                        tableClientes.AddCell("") ' Opcionalmente, puedes agregar un valor predeterminado en caso de que la celda sea nula
-                    End If
-                Next
-            Next
-
-            ' Agregar la tabla de clientes al documento
-            docClientes.Add(tableClientes)
-
-            ' Agregar el recuento de productos al documento
-            Dim clientesCount As Integer = CountClientes()
-            Dim countclientesTable As New PdfPTable(2)
-            countclientesTable.DefaultCell.Padding = 3
-            countclientesTable.WidthPercentage = 100
-            countclientesTable.HorizontalAlignment = Element.ALIGN_LEFT
-            countclientesTable.AddCell("Recuento de Clientes:")
-            countclientesTable.AddCell(clientesCount.ToString())
-            docClientes.Add(countclientesTable)
-
-            ' Cerrar el documento de clientes
-            docClientes.Close()
-
-            MessageBox.Show("La tabla 'clientes' se ha exportado a un archivo PDF.")
-        Else
-            MessageBox.Show("No hay datos en la tabla 'clientes'.")
-        End If
-    End Sub
     Private Function Count()
 
         Dim productCount As Integer = CountProducts()
@@ -111,14 +172,26 @@ Public Class Report
     End Function
 
 
-
     Private Function CountProducts() As Integer
-        Return DataGridView.Rows.Count
+        Dim count As Integer = 0
+        For Each row As DataGridViewRow In DataGridView.Rows
+            If Not row.IsNewRow AndAlso Not row.Cells("Id").Value Then
+                count += 1
+            End If
+        Next
+        Return count
     End Function
 
     Private Function CountClientes() As Integer
-        Return DataGridViewClients.Rows.Count
+        Dim count As Integer = 0
+        For Each row As DataGridViewRow In DataGridViewClients.Rows
+            If Not row.IsNewRow AndAlso Not row.Cells("Id").Value Then
+                count += 1
+            End If
+        Next
+        Return count
     End Function
+
 
     Private Sub Report_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -169,10 +242,6 @@ Public Class Report
         End Using
     End Sub
 
-
-
-
-
     '''
     ''' Boton EXIT
     '''
@@ -186,7 +255,6 @@ Public Class Report
     '''
 
     Private Sub InventarioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventarioToolStripMenuItem.Click
-        IMS.Show()
         Me.Close()
     End Sub
 
@@ -213,5 +281,6 @@ Public Class Report
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
         Application.Exit()
     End Sub
+
 
 End Class

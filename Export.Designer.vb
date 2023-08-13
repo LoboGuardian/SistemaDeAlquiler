@@ -42,7 +42,7 @@ Partial Class Export
         MenuStrip1.Items.AddRange(New ToolStripItem() {InventarioToolStripMenuItem, ClientesToolStripMenuItem, AlquilerToolStripMenuItem, ReporteToolStripMenuItem, CerrarSesiónToolStripMenuItem, SalirToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(346, 28)
+        MenuStrip1.Size = New Size(387, 28)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
@@ -87,7 +87,7 @@ Partial Class Export
         ExportButton.BackColor = Color.Khaki
         ExportButton.FlatStyle = FlatStyle.Popup
         ExportButton.Font = New Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point)
-        ExportButton.Location = New Point(12, 46)
+        ExportButton.Location = New Point(58, 98)
         ExportButton.Name = "ExportButton"
         ExportButton.Size = New Size(94, 34)
         ExportButton.TabIndex = 37
@@ -99,7 +99,7 @@ Partial Class Export
         ExitButton.BackColor = Color.Khaki
         ExitButton.FlatStyle = FlatStyle.Popup
         ExitButton.Font = New Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point)
-        ExitButton.Location = New Point(164, 51)
+        ExitButton.Location = New Point(210, 103)
         ExitButton.Name = "ExitButton"
         ExitButton.Size = New Size(94, 29)
         ExitButton.TabIndex = 36
@@ -111,7 +111,7 @@ Partial Class Export
         PictureBox1.Image = My.Resources.Resources.cloud_backup_for_business
         PictureBox1.Location = New Point(0, 31)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(346, 146)
+        PictureBox1.Size = New Size(387, 251)
         PictureBox1.TabIndex = 40
         PictureBox1.TabStop = False
         ' 
@@ -119,7 +119,7 @@ Partial Class Export
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(346, 181)
+        ClientSize = New Size(387, 274)
         Controls.Add(ExportButton)
         Controls.Add(ExitButton)
         Controls.Add(MenuStrip1)

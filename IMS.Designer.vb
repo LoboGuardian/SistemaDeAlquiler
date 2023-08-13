@@ -26,7 +26,6 @@ Partial Class IMS
         ClientesToolStripMenuItem = New ToolStripMenuItem()
         AlquilerToolStripMenuItem = New ToolStripMenuItem()
         ReporteToolStripMenuItem = New ToolStripMenuItem()
-        RegistroToolStripMenuItem = New ToolStripMenuItem()
         RespaldoToolStripMenuItem = New ToolStripMenuItem()
         AcercaDeToolStripMenuItem = New ToolStripMenuItem()
         CerrarSesiónToolStripMenuItem = New ToolStripMenuItem()
@@ -63,7 +62,7 @@ Partial Class IMS
         ' MenuStrip1
         ' 
         MenuStrip1.ImageScalingSize = New Size(20, 20)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {ClientesToolStripMenuItem, AlquilerToolStripMenuItem, ReporteToolStripMenuItem, RegistroToolStripMenuItem, RespaldoToolStripMenuItem, AcercaDeToolStripMenuItem, CerrarSesiónToolStripMenuItem, SalirToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {ClientesToolStripMenuItem, AlquilerToolStripMenuItem, ReporteToolStripMenuItem, RespaldoToolStripMenuItem, AcercaDeToolStripMenuItem, CerrarSesiónToolStripMenuItem, SalirToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Size = New Size(871, 28)
@@ -87,12 +86,6 @@ Partial Class IMS
         ReporteToolStripMenuItem.Name = "ReporteToolStripMenuItem"
         ReporteToolStripMenuItem.Size = New Size(76, 24)
         ReporteToolStripMenuItem.Text = "Reporte"
-        ' 
-        ' RegistroToolStripMenuItem
-        ' 
-        RegistroToolStripMenuItem.Name = "RegistroToolStripMenuItem"
-        RegistroToolStripMenuItem.Size = New Size(78, 24)
-        RegistroToolStripMenuItem.Text = "Registro"
         ' 
         ' RespaldoToolStripMenuItem
         ' 
@@ -389,7 +382,6 @@ Partial Class IMS
     Friend WithEvents ClientesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AlquilerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReporteToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents RegistroToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RespaldoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AcercaDeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CerrarSesiónToolStripMenuItem As ToolStripMenuItem

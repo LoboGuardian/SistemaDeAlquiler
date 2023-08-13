@@ -6,7 +6,6 @@
     <StartupObject>SistemaDeAlquiler.Form1</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
-    <ApplicationIcon>cooperativa-logo-74A44D1069-seeklogo.com.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

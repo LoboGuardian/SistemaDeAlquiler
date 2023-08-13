@@ -354,17 +354,17 @@ Public Class Clients
 
     Private Sub AlquilerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AlquilerToolStripMenuItem.Click
         Alquiler.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub ReporteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReporteToolStripMenuItem.Click
         Report.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub RespaldoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RespaldoToolStripMenuItem.Click
         Export.Show()
-        Me.Close()
+        Me.Hide()
     End Sub
 
     Private Sub CerrarSesiónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarSesiónToolStripMenuItem.Click
